@@ -1,0 +1,24 @@
+{
+  "name": "tetrislet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./src/js",
+    "lint:fix": "eslint ./src/js --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KhrapkoVasyl/Tetrislet.git"
+  },
+  "author": "Vasyl Khrapko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KhrapkoVasyl/Tetrislet/issues"
+  },
+  "homepage": "https://github.com/KhrapkoVasyl/Tetrislet#readme",
+  "devDependencies": {
+    "eslint": "^8.4.1"
+  }
+}
