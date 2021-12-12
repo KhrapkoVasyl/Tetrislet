@@ -1,4 +1,4 @@
-'use strict';
+import Board from './board.js';
 
-
-const f = "dadsasad";
+const gameBoard = new Board();
+gameBoard.showState();
