@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: black;
+}
+
+.main {
+  width: 320px;
+  height: 620px;
+  margin: 100px auto 0;
+  border: 10px solid seashell;
+  font-size: 0;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid seashell;
+  display: inline-block;
+}
+
+.grey_cell {
+  background-color: rgb(145, 141, 141);
+}
+
+.green_cell {
+  background-color: #00ff00;
+}
+
+.red_cell {
+  background-color: #e9111cf5;
+}
+
+.violet_cell {
+  background-color: #ff69b4;
+}
+
+.blue_cell {
+  background-color: #4682b4;
+}
