@@ -35,9 +35,13 @@ body {
 }
 
 .violet_cell {
-  background-color: #ff69b4;
+  background-color: #fd52a8;
 }
 
 .blue_cell {
   background-color: #4682b4;
+}
+
+.yellow_cell {
+  background-color: #e9e916;
 }
