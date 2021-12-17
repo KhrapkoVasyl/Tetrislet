@@ -1,39 +1,30 @@
 import * as CONSTANTS from './constants.js';
 
 export default class Board {
-  #state = [];
-  lastFigArr = [];
+  state = [];
   #boardElement = document.querySelector('.main');
 
   constructor() {
     this.fillBoard();
     this.drawBoard();
+    this.showState();
   }
 
-  get state() {
-    return this.#state;
-  }
+  // get state() {
+  //   return this.state;
+  // }
 
   fillBoard() {
     for (let i = 0; i < 20; i++) {
       const nullArr = new Array(10);
       nullArr.fill(0);
-      this.#state.push(nullArr);
-    }
-  }
-
-  refill(num) {
-    //for tests
-    for (let i = 0; i < this.#state.length; i++) {
-      for (let j = 0; j < this.#state[i].length; j++) {
-        this.#state[i][j] = num;
-      }
+      this.state.push(nullArr);
     }
   }
 
   drawBoard() {
     let mainInnerHTML = '';
-    for (const row of this.#state) {
+    for (const row of this.state) {
       for (const el of row) {
         mainInnerHTML += this.generateCellElement(el);
       }
@@ -41,17 +32,17 @@ export default class Board {
     this.#boardElement.innerHTML = mainInnerHTML;
   }
 
-  drawFigure(figureArr, color) {
-    if (this.lastFigArr.length !== 0)
-      this.displayFigure(this.lastFigArr, CONSTANTS.EMPTY_CELL_ID);
-    this.displayFigure(figureArr, color);
+  clearFigure(figure) {
+    this.displayFigure(figure, CONSTANTS.EMPTY_CELL_ID);
+    this.drawBoard();
   }
 
-  displayFigure(figureArr, cellColor) {
-    for (const coords of figureArr) {
+  displayFigure(figure, color = figure.color) {
+    for (const coords of figure.coords) {
       const [x, y] = coords;
-      this.#state[x][y] = cellColor;
+      this.state[y][x] = color;
     }
+    this.drawBoard();
   }
 
   generateCellElement(cell) {
@@ -77,12 +68,11 @@ export default class Board {
 
   showState() {
     let stateMatrix = '';
-    for (const subArr of this.#state) {
+    for (const subArr of this.state) {
       for (const el of subArr) {
         stateMatrix += el + ' ';
       }
       stateMatrix += '\n';
     }
-    console.log(stateMatrix);
   }
 }

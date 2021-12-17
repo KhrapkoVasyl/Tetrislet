@@ -21,7 +21,7 @@ const KEY_LEFT = 'ArrowLeft';
 const KEY_UP = 'ArrowUp';
 const KEY_DOWN = 'ArrowDown';
 
-const FIGURES_QUANTITY = 6;
+const FIGURES_QUANTITY = 7;
 
 export {
   EMPTY_CELL_ID,

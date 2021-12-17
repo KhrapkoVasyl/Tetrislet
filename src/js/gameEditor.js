@@ -1,24 +1,41 @@
 import Board from './board.js';
 import * as CONSTANTS from './constants.js';
-import Figure from './figure/figure.js';
+import FigureI from './figure/figureI.js';
+import FigureJ from './figure/figureJ.js';
+import FigureL from './figure/figureL.js';
+import FigureS from './figure/figureS.js';
+import FigureT from './figure/figureT.js';
+import FigureZ from './figure/figureZ.js';
+import FigureO from './figure/figureO.js';
 
 export default class GameEditor {
   #speedLevel = 1;
-  #gameSpeed = 1000 - 0.125 * (this.speedLevel - 1);
+  gameSpeed = 1000 - 0.125 * (this.#speedLevel - 1);
   #gameBoard = new Board();
   #currentFigure;
 
   constructor() {
     this.initKeyControl();
+    this.startGame();
   }
 
   startGame() {
-    // this.#currentFigure.moveDonw();
-    this.gameBoard.drawBoard();
-    setTimeout(this.gameSpeed, this.startGame);
+    if (!this.#currentFigure) {
+      this.selectRandomFigure();
+      this.#gameBoard.displayFigure(this.#currentFigure);
+    }
+    this.#gameBoard.clearFigure(this.#currentFigure);
+    const isActive = this.#currentFigure.moveDown(this.#gameBoard.state);
+    if (!isActive) {
+      this.#gameBoard.displayFigure(this.#currentFigure);
+      this.deleteLine();
+      this.selectRandomFigure();
+      this.#gameBoard.displayFigure(this.#currentFigure);
+    } else {
+      this.#gameBoard.displayFigure(this.#currentFigure);
+    }
+    setTimeout(this.startGame.bind(this), this.gameSpeed);
   }
-
-  // удалить ряд фигур
 
   initKeyControl() {
     document.onkeydown = e => this.checkKey(e);
@@ -28,20 +45,44 @@ export default class GameEditor {
     console.log(e);
     switch (e.key) {
       case CONSTANTS.KEY_DOWN:
-        // падение вниз
+        this.#gameBoard.displayFigure(this.#currentFigure, 0);
+        this.#currentFigure.moveDown(this.#gameBoard.state);
+        this.#gameBoard.displayFigure(this.#currentFigure);
         break;
       case CONSTANTS.KEY_LEFT:
         if (e.shiftKey) return; //финкция поворота
-        //движение влево
-        break;
-      case CONSTANTS.KEY_UP:
-        //хз зачем кнопка вверх
+        this.#gameBoard.displayFigure(this.#currentFigure, 0);
+        this.#currentFigure.moveLeft(this.#gameBoard.state);
+        this.#gameBoard.displayFigure(this.#currentFigure);
+
         break;
       case CONSTANTS.KEY_RIGHT:
         if (e.shiftKey) return; //финкция поворота
-        //движение вправо
+        this.#gameBoard.displayFigure(this.#currentFigure, 0);
+        this.#currentFigure.moveRight(this.#gameBoard.state);
+        this.#gameBoard.displayFigure(this.#currentFigure);
         break;
     }
+  }
+
+  deleteLine() {
+    let isFilled = true;
+    console.log('hello');
+    for (let i = 0; i < this.#gameBoard.state.length; i++) {
+      console.log('inside');
+      for (let j = 0; j < this.#gameBoard.state[i].length; j++) {
+        if (this.#gameBoard.state[i][j] === 0) {
+          isFilled = false;
+          break;
+        }
+      }
+      if (isFilled) {
+        this.#gameBoard.state.splice(i, 1);
+        this.#gameBoard.state.unshift(new Array(10).fill(0));
+      }
+      isFilled = true;
+    }
+    console.log('goodbye');
   }
 
   selectRandomFigure() {
@@ -49,22 +90,25 @@ export default class GameEditor {
 
     switch (randomFigure) {
       case 0:
-        this.#currentFigure = new Figure();
+        this.#currentFigure = new FigureI();
         break;
       case 1:
-        this.#currentFigure = new Figure();
+        this.#currentFigure = new FigureJ();
         break;
       case 2:
-        this.#currentFigure = new Figure();
+        this.#currentFigure = new FigureL();
         break;
       case 3:
-        this.#currentFigure = new Figure();
+        this.#currentFigure = new FigureS();
         break;
       case 4:
-        this.#currentFigure = new Figure();
+        this.#currentFigure = new FigureT();
         break;
       case 5:
-        this.#currentFigure = new Figure();
+        this.#currentFigure = new FigureZ();
+        break;
+      case 6:
+        this.#currentFigure = new FigureO();
         break;
       default:
         return;

@@ -1,15 +1,15 @@
 import Figure from './figure.js';
 import * as CONSTANTS from './../constants.js';
 
-export default class FigureS extends Figure {
-  color = CONSTANTS.RED_CELL_ID;
-  #START_X1 = 6;
-  #START_Y1 = 0;
-  #START_X2 = 5;
+export default class FigureO extends Figure {
+  color = CONSTANTS.VIOLET_CELL_ID;
+  #START_X1 = 4;
+  #START_Y1 = 1;
+  #START_X2 = 4;
   #START_Y2 = 0;
   #START_X3 = 5;
-  #START_Y3 = 1;
-  #START_X4 = 4;
+  #START_Y3 = 0;
+  #START_X4 = 5;
   #START_Y4 = 1;
 
   constructor() {
