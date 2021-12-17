@@ -45,3 +45,6 @@ body {
 .yellow_cell {
   background-color: #e9e916;
 }
+.pink_cell {
+  background-color: rgb(228, 49, 204);
+}

@@ -5,7 +5,7 @@ import GameEditor from './gameEditor.js';
 // gameBoard.showState();
 // gameBoard.refill(4);
 // gameBoard.drawBoard();
-// gameBoard.showState();
 
 const game = new GameEditor();
-game.startGame();
+console.log(game.boardState);
+console.log(game.selectRandomFigure());
