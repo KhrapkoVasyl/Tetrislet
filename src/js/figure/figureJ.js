@@ -11,6 +11,12 @@ export default class FigureJ extends Figure {
   #START_Y3 = 0;
   #START_X4 = 6;
   #START_Y4 = 1;
+  #FIGURE_LENGTH = 3;
+  figureArray = [
+    [1, 1, 1],
+    [0, 0, 1],
+    [0, 0, 0],
+  ];
 
   constructor() {
     super();

@@ -64,6 +64,69 @@ export default class Figure {
     return true;
   }
 
-  // поворот вправо,
-  // поворот влево,
+  makeFigureArray(figureLength) {
+    const newArr = [];
+    for (let i = 0; i < figureLength; i++) {
+      newArr[i] = new Array(figureLength).fill(0);
+    }
+    return newArr;
+  }
+
+  rotateMatrix(figureArr) {
+    const temp = this.makeFigureArray(figureArr.length);
+    console.log(temp);
+    for (let y = 0; y < figureArr.length; y++) {
+      for (let x = 0; x < figureArr.length; x++) {
+        temp[x][y] = figureArr[figureArr.length - 1 - y][x];
+      }
+    }
+
+    return temp;
+  }
+
+  searchMin() {
+    let minX = this.coords[0][0];
+    let minY = this.coords[0][1];
+    for (const arr of this.coords) {
+      if (minX > arr[0]) minX = arr[0];
+      if (minY > arr[1]) minY = arr[1];
+    }
+    return [minX, minY];
+  }
+
+  roll(board) {
+    if (!this.canRoll(board)) return;
+    this.figureArray = this.rotateMatrix(this.figureArray);
+    let el = 0;
+    const [minX, minY] = this.searchMin();
+    console.log(minX, minY);
+    for (let y = 0; y < this.figureArray.length; y++) {
+      for (let x = 0; x < this.figureArray.length; x++) {
+        if (this.figureArray[y][x] === 1) {
+          this.coords[el][0] = x + minX;
+          this.coords[el][1] = y + minY;
+          el++;
+        }
+      }
+    }
+  }
+
+  canRoll(board) {
+    const tmp = this.rotateMatrix(this.figureArray);
+    const [minX, minY] = this.searchMin();
+    for (let y = 0; y < tmp.length; y++) {
+      for (let x = 0; x < tmp.length; x++) {
+        const newY = y + minY;
+        const newX = x + minX;
+        console.log(newX, newY);
+        if (
+          newY > board.length - 1 ||
+          newX > board[newY].length - 1 ||
+          board[newY][newX] !== 0
+        )
+          return false;
+      }
+    }
+    return true;
+  }
 }

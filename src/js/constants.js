@@ -20,6 +20,7 @@ const KEY_RIGHT = 'ArrowRight';
 const KEY_LEFT = 'ArrowLeft';
 const KEY_UP = 'ArrowUp';
 const KEY_DOWN = 'ArrowDown';
+const KEY_SPACE = ' ';
 
 const FIGURES_QUANTITY = 7;
 
@@ -44,5 +45,6 @@ export {
   KEY_LEFT,
   KEY_UP,
   KEY_DOWN,
+  KEY_SPACE,
   FIGURES_QUANTITY,
 };

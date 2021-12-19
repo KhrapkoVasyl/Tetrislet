@@ -25,4 +25,6 @@ export default class FigureO extends Figure {
       this.#START_Y4
     );
   }
+
+  roll() {}
 }

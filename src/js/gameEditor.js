@@ -50,18 +50,20 @@ export default class GameEditor {
         this.#gameBoard.displayFigure(this.#currentFigure);
         break;
       case CONSTANTS.KEY_LEFT:
-        if (e.shiftKey) return; //финкция поворота
         this.#gameBoard.displayFigure(this.#currentFigure, 0);
         this.#currentFigure.moveLeft(this.#gameBoard.state);
         this.#gameBoard.displayFigure(this.#currentFigure);
 
         break;
       case CONSTANTS.KEY_RIGHT:
-        if (e.shiftKey) return; //финкция поворота
         this.#gameBoard.displayFigure(this.#currentFigure, 0);
         this.#currentFigure.moveRight(this.#gameBoard.state);
         this.#gameBoard.displayFigure(this.#currentFigure);
         break;
+      case CONSTANTS.KEY_SPACE:
+        this.#gameBoard.displayFigure(this.#currentFigure, 0);
+        this.#currentFigure.roll(this.#gameBoard.state);
+        this.#gameBoard.displayFigure(this.#currentFigure);
     }
   }
 
@@ -87,7 +89,6 @@ export default class GameEditor {
 
   selectRandomFigure() {
     const randomFigure = Math.floor(Math.random() * CONSTANTS.FIGURES_QUANTITY);
-
     switch (randomFigure) {
       case 0:
         this.#currentFigure = new FigureI();

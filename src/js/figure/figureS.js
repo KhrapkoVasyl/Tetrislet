@@ -11,6 +11,11 @@ export default class FigureS extends Figure {
   #START_Y3 = 1;
   #START_X4 = 4;
   #START_Y4 = 1;
+  figureArray = [
+    [0, 1, 1],
+    [1, 1, 0],
+    [0, 0, 0],
+  ];
 
   constructor() {
     super();
