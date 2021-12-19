@@ -21,6 +21,7 @@ const KEY_LEFT = 'ArrowLeft';
 const KEY_UP = 'ArrowUp';
 const KEY_DOWN = 'ArrowDown';
 const KEY_SPACE = ' ';
+const KEY_SHIFT = 'Shift';
 
 const FIGURES_QUANTITY = 7;
 
@@ -46,5 +47,6 @@ export {
   KEY_UP,
   KEY_DOWN,
   KEY_SPACE,
+  KEY_SHIFT,
   FIGURES_QUANTITY,
 };

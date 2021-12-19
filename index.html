@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tetrislet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
     <script defer type="module" src="./src/js/index.js"></script>
-</head>
-<body>
-    <div class="main"></div>
-</body>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>Tetrislet</h1>
+      <div class="main"></div>
+      <div class="scoreBoard">
+        <h2>Score: <span class="score-value">0</span></h2>
+        <div class="game-over hidden">
+          <h3>Game Over</h3>
+          <button class="restart-button">Restart Game</button>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

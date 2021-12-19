@@ -4,11 +4,6 @@ export default class Figure {
 
   constructor() {}
 
-  // setter(type, elementNumber, value) {
-  //   const element = elementNumber - 1;
-  //   const index = type === 'x' ? 0 : 1;
-  //   this.figureCoords[element][index] = value;
-  // }
   setCoordinates(x1, y1, x2, y2, x3, y3, x4, y4) {
     this.coords.push([x1, y1], [x2, y2], [x3, y3], [x4, y4]);
   }
@@ -74,7 +69,6 @@ export default class Figure {
 
   rotateMatrix(figureArr) {
     const temp = this.makeFigureArray(figureArr.length);
-    console.log(temp);
     for (let y = 0; y < figureArr.length; y++) {
       for (let x = 0; x < figureArr.length; x++) {
         temp[x][y] = figureArr[figureArr.length - 1 - y][x];
@@ -99,7 +93,6 @@ export default class Figure {
     this.figureArray = this.rotateMatrix(this.figureArray);
     let el = 0;
     const [minX, minY] = this.searchMin();
-    console.log(minX, minY);
     for (let y = 0; y < this.figureArray.length; y++) {
       for (let x = 0; x < this.figureArray.length; x++) {
         if (this.figureArray[y][x] === 1) {
@@ -118,7 +111,6 @@ export default class Figure {
       for (let x = 0; x < tmp.length; x++) {
         const newY = y + minY;
         const newX = x + minX;
-        console.log(newX, newY);
         if (
           newY > board.length - 1 ||
           newX > board[newY].length - 1 ||

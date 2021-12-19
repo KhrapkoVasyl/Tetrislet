@@ -1,7 +1,8 @@
 import * as CONSTANTS from './constants.js';
 
 export default class Board {
-  state = [];
+  static #instance;
+  state;
   #boardElement = document.querySelector('.main');
 
   constructor() {
@@ -10,11 +11,16 @@ export default class Board {
     this.showState();
   }
 
-  // get state() {
-  //   return this.state;
-  // }
+  static getInstance() {
+    if (!this.#instance) {
+      this.#instance = new Board();
+    }
+
+    return this.#instance;
+  }
 
   fillBoard() {
+    this.state = [];
     for (let i = 0; i < 20; i++) {
       const nullArr = new Array(10);
       nullArr.fill(0);
@@ -74,5 +80,6 @@ export default class Board {
       }
       stateMatrix += '\n';
     }
+    return stateMatrix;
   }
 }

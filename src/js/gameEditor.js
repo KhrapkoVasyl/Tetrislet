@@ -1,4 +1,5 @@
 import Board from './board.js';
+import Score from './score.js';
 import * as CONSTANTS from './constants.js';
 import FigureI from './figure/figureI.js';
 import FigureJ from './figure/figureJ.js';
@@ -9,40 +10,92 @@ import FigureZ from './figure/figureZ.js';
 import FigureO from './figure/figureO.js';
 
 export default class GameEditor {
+  static #gameInstance;
   #speedLevel = 1;
-  gameSpeed = 1000 - 0.125 * (this.#speedLevel - 1);
-  #gameBoard = new Board();
+  #gameSpeed = 1000 - 125 * (this.#speedLevel - 1);
+  #gameBoard = Board.getInstance();
+  #score = Score.getInstance();
   #currentFigure;
+  #restartButton = document.querySelector('.restart-button');
+  #gameOver = document.querySelector('.game-over');
 
   constructor() {
     this.initKeyControl();
     this.startGame();
+    this.initButtonRestart();
+  }
+
+  static getInstance() {
+    if (!this.#gameInstance) {
+      this.#gameInstance = new GameEditor();
+    }
+
+    return this.#gameInstance;
   }
 
   startGame() {
     if (!this.#currentFigure) {
       this.selectRandomFigure();
       this.#gameBoard.displayFigure(this.#currentFigure);
+      this.#gameBoard.drawBoard();
+      this.#score.addPoints(10);
+      this.checkSpeed();
     }
     this.#gameBoard.clearFigure(this.#currentFigure);
     const isActive = this.#currentFigure.moveDown(this.#gameBoard.state);
     if (!isActive) {
       this.#gameBoard.displayFigure(this.#currentFigure);
+      const [minX, minY] = this.#currentFigure.searchMin();
+      if (minY === 0) {
+        this.endGame();
+        return;
+      }
       this.deleteLine();
       this.selectRandomFigure();
-      this.#gameBoard.displayFigure(this.#currentFigure);
-    } else {
-      this.#gameBoard.displayFigure(this.#currentFigure);
+      this.#score.addPoints(10);
+      this.checkSpeed();
     }
-    setTimeout(this.startGame.bind(this), this.gameSpeed);
+    this.#gameBoard.displayFigure(this.#currentFigure);
+
+    setTimeout(this.startGame.bind(this), this.#gameSpeed);
+  }
+
+  initButtonRestart() {
+    this.#restartButton.addEventListener('click', this.restartGame.bind(this));
   }
 
   initKeyControl() {
     document.onkeydown = e => this.checkKey(e);
   }
 
+  restartGame() {
+    this.#gameOver.classList.add('hidden');
+    this.#gameBoard.fillBoard();
+    this.#score.nullify();
+    this.#speedLevel = 1;
+    this.#gameSpeed = 1000 - 125 * (this.#speedLevel - 1);
+    this.#gameBoard.drawBoard();
+    this.startGame();
+  }
+
+  endGame() {
+    this.#gameOver.classList.remove('hidden');
+    this.#currentFigure = null;
+  }
+
+  checkSpeed() {
+    if (this.#speedLevel >= 8) return;
+    if (
+      this.#score.getScore() >
+      (1000 * this.#speedLevel) / (9 - this.#speedLevel)
+    ) {
+      this.#speedLevel++;
+      this.#gameSpeed = 1000 - 125 * (this.#speedLevel - 1);
+    }
+  }
+
   checkKey(e) {
-    console.log(e);
+    console.log(e.key);
     switch (e.key) {
       case CONSTANTS.KEY_DOWN:
         this.#gameBoard.displayFigure(this.#currentFigure, 0);
@@ -60,7 +113,7 @@ export default class GameEditor {
         this.#currentFigure.moveRight(this.#gameBoard.state);
         this.#gameBoard.displayFigure(this.#currentFigure);
         break;
-      case CONSTANTS.KEY_SPACE:
+      case CONSTANTS.KEY_SHIFT:
         this.#gameBoard.displayFigure(this.#currentFigure, 0);
         this.#currentFigure.roll(this.#gameBoard.state);
         this.#gameBoard.displayFigure(this.#currentFigure);
@@ -69,9 +122,8 @@ export default class GameEditor {
 
   deleteLine() {
     let isFilled = true;
-    console.log('hello');
+    let filledRows = 0;
     for (let i = 0; i < this.#gameBoard.state.length; i++) {
-      console.log('inside');
       for (let j = 0; j < this.#gameBoard.state[i].length; j++) {
         if (this.#gameBoard.state[i][j] === 0) {
           isFilled = false;
@@ -79,12 +131,13 @@ export default class GameEditor {
         }
       }
       if (isFilled) {
+        filledRows++;
         this.#gameBoard.state.splice(i, 1);
         this.#gameBoard.state.unshift(new Array(10).fill(0));
       }
       isFilled = true;
     }
-    console.log('goodbye');
+    this.#score.addOnRawsFilled(filledRows);
   }
 
   selectRandomFigure() {
