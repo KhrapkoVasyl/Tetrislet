@@ -1,6 +1,6 @@
 import Board from './board.js';
 import Score from './score.js';
-import * as CONSTANTS from './constants.js';
+import * as CONSTANTS from './config.js';
 import FigureI from './figure/figureI.js';
 import FigureJ from './figure/figureJ.js';
 import FigureL from './figure/figureL.js';
@@ -142,6 +142,7 @@ export default class GameEditor {
 
   selectRandomFigure() {
     const randomFigure = Math.floor(Math.random() * CONSTANTS.FIGURES_QUANTITY);
+
     switch (randomFigure) {
       case 0:
         this.#currentFigure = new FigureI();

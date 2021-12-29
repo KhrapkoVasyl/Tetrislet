@@ -1,5 +1,5 @@
 import Figure from './figure.js';
-import * as CONSTANTS from './../constants.js';
+import * as CONSTANTS from './../config.js';
 
 export default class FigureT extends Figure {
   color = CONSTANTS.PINK_CELL_ID;
