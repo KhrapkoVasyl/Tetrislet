@@ -1,2 +1,5 @@
-import GameEditor from './gameEditor.js';
-GameEditor.getInstance();
+import mount from './main.js';
+
+const root = document.getElementById('root');
+
+mount(root);

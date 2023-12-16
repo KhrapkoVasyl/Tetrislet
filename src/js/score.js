@@ -1,15 +1,6 @@
 export default class Score {
-  static #instance;
   #score = 0;
   scoreBoard = document.querySelector('.score-value');
-
-  static getInstance() {
-    if (!this.#instance) {
-      this.#instance = new Score();
-    }
-
-    return this.#instance;
-  }
 
   getScore() {
     return this.#score;

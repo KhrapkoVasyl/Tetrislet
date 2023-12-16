@@ -1,7 +1,6 @@
 import * as CONSTANTS from './config.js';
 
 export default class Board {
-  static #instance;
   state;
   #boardElement = document.querySelector('.main');
 
@@ -9,14 +8,6 @@ export default class Board {
     this.fillBoard();
     this.drawBoard();
     this.showState();
-  }
-
-  static getInstance() {
-    if (!this.#instance) {
-      this.#instance = new Board();
-    }
-
-    return this.#instance;
   }
 
   fillBoard() {

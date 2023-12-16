@@ -10,27 +10,25 @@ import FigureZ from './figure/figureZ.js';
 import FigureO from './figure/figureO.js';
 
 export default class GameEditor {
-  static #gameInstance;
   #speedLevel = 1;
   #gameSpeed = 1000 - 125 * (this.#speedLevel - 1);
-  #gameBoard = Board.getInstance();
-  #score = Score.getInstance();
+  #gameBoard = new Board();
+  #score = new Score();
   #currentFigure;
   #restartButton = document.querySelector('.restart-button');
   #gameOver = document.querySelector('.game-over');
+  #timerId = null;
 
-  constructor() {
-    this.initKeyControl();
+  init() {
+    document.addEventListener('keydown', this.checkKey);
+    this.#restartButton.addEventListener('click', this.restartGame);
     this.startGame();
-    this.initButtonRestart();
   }
 
-  static getInstance() {
-    if (!this.#gameInstance) {
-      this.#gameInstance = new GameEditor();
-    }
-
-    return this.#gameInstance;
+  destroy() {
+    document.removeEventListener('keydown', this.checkKey);
+    this.#restartButton.removeEventListener('click', this.restartGame);
+    clearInterval(this.#timerId);
   }
 
   startGame() {
@@ -57,18 +55,10 @@ export default class GameEditor {
     }
     this.#gameBoard.displayFigure(this.#currentFigure);
 
-    setTimeout(this.startGame.bind(this), this.#gameSpeed);
+    this.#timerId = setTimeout(this.startGame.bind(this), this.#gameSpeed);
   }
 
-  initButtonRestart() {
-    this.#restartButton.addEventListener('click', this.restartGame.bind(this));
-  }
-
-  initKeyControl() {
-    document.onkeydown = e => this.checkKey(e);
-  }
-
-  restartGame() {
+  restartGame = () => {
     this.#gameOver.classList.add('hidden');
     this.#gameBoard.fillBoard();
     this.#score.nullify();
@@ -76,7 +66,7 @@ export default class GameEditor {
     this.#gameSpeed = 1000 - 125 * (this.#speedLevel - 1);
     this.#gameBoard.drawBoard();
     this.startGame();
-  }
+  };
 
   endGame() {
     this.#gameOver.classList.remove('hidden');
@@ -94,7 +84,7 @@ export default class GameEditor {
     }
   }
 
-  checkKey(e) {
+  checkKey = e => {
     console.log(e.key);
     switch (e.key) {
       case CONSTANTS.KEY_DOWN:
@@ -118,7 +108,7 @@ export default class GameEditor {
         this.#currentFigure.roll(this.#gameBoard.state);
         this.#gameBoard.displayFigure(this.#currentFigure);
     }
-  }
+  };
 
   deleteLine() {
     let isFilled = true;

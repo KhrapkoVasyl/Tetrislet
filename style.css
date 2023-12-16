@@ -1,24 +1,10 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background: black;
-  color: white;
-  font-family: 'Press Start 2P', cursive;
-}
-.wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 50px 300px;
-}
 .main {
   width: 320px;
   height: 620px;
   border: 10px solid seashell;
   font-size: 0;
+  background: black;
+  color: white;
 }
 
 .cell {

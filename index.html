@@ -13,18 +13,27 @@
     />
     <link rel="stylesheet" href="style.css" />
     <script defer type="module" src="./src/js/index.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: black;
+        color: white;
+        font-family: 'Press Start 2P', cursive;
+      }
+
+      .wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 50px 300px;
+      }
+    </style>
   </head>
   <body>
-    <div class="wrapper">
-      <h1>Tetrislet</h1>
-      <div class="main"></div>
-      <div class="scoreBoard">
-        <h2>Score: <span class="score-value">0</span></h2>
-        <div class="game-over hidden">
-          <h3>Game Over</h3>
-          <button class="restart-button">Restart Game</button>
-        </div>
-      </div>
-    </div>
+    <div class="wrapper" id="root"></div>
   </body>
 </html>
