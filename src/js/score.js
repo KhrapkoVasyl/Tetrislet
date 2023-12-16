@@ -8,12 +8,18 @@ export default class Score {
 
   addPoints(points) {
     this.#score += points;
-    this.scoreBoard.textContent = this.#score;
+
+    if (this.scoreBoard) {
+      this.scoreBoard.textContent = this.#score;
+    }
   }
 
   nullify() {
     this.#score = 0;
-    this.scoreBoard.textContent = this.#score;
+
+    if (this.scoreBoard) {
+      this.scoreBoard.textContent = this.#score;
+    }
   }
 
   addOnRawsFilled(quantity) {

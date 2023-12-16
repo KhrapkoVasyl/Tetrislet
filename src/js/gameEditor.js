@@ -19,15 +19,29 @@ export default class GameEditor {
   #gameOver = document.querySelector('.game-over');
   #timerId = null;
 
+  constructor(gameAppEventService) {
+    this.gameAppEventService = gameAppEventService;
+  }
+
   init() {
     document.addEventListener('keydown', this.checkKey);
-    this.#restartButton.addEventListener('click', this.restartGame);
+    this.#restartButton?.addEventListener('click', this.restartGame);
+    this.gameAppEventService?.subscribe(
+      this.gameAppEventService.GameAppEvent.RESTART,
+      this.restartGame
+    );
+
     this.startGame();
   }
 
   destroy() {
     document.removeEventListener('keydown', this.checkKey);
-    this.#restartButton.removeEventListener('click', this.restartGame);
+    this.#restartButton?.removeEventListener('click', this.restartGame);
+    this.gameAppEventService?.unsubscribe(
+      this.gameAppEventService.GameAppEvent.RESTART,
+      this.restartGame
+    );
+
     clearInterval(this.#timerId);
   }
 
@@ -46,6 +60,11 @@ export default class GameEditor {
       const [minX, minY] = this.#currentFigure.searchMin();
       if (minY === 0) {
         this.endGame();
+
+        this.gameAppEventService?.fire(
+          this.gameAppEventService.GameAppEvent.END
+        );
+
         return;
       }
       this.deleteLine();
@@ -53,13 +72,19 @@ export default class GameEditor {
       this.#score.addPoints(10);
       this.checkSpeed();
     }
+
+    this.gameAppEventService?.fire(
+      this.gameAppEventService.GameAppEvent.SCORE_UPDATE,
+      { detail: { score: this.#score.getScore() } }
+    );
+
     this.#gameBoard.displayFigure(this.#currentFigure);
 
     this.#timerId = setTimeout(this.startGame.bind(this), this.#gameSpeed);
   }
 
   restartGame = () => {
-    this.#gameOver.classList.add('hidden');
+    this.#gameOver?.classList.add('hidden');
     this.#gameBoard.fillBoard();
     this.#score.nullify();
     this.#speedLevel = 1;
@@ -69,7 +94,7 @@ export default class GameEditor {
   };
 
   endGame() {
-    this.#gameOver.classList.remove('hidden');
+    this.#gameOver?.classList.remove('hidden');
     this.#currentFigure = null;
   }
 

@@ -1,7 +1,9 @@
 import GameEditor from './gameEditor.js';
 import '../../style.css';
 
-const mount = root => {
+const mount = (root, gameAppEventService, config) => {
+  const { showControls } = config ?? {};
+
   const gameTitle = document.createElement('h1');
   gameTitle.innerText = 'Tetrislet';
 
@@ -35,11 +37,17 @@ const mount = root => {
   scoreBoard.append(score);
   scoreBoard.append(gameOver);
 
-  root.append(gameTitle);
-  root.append(main);
-  root.append(scoreBoard);
+  if (showControls) {
+    root.prepend(gameTitle);
+  }
 
-  const gameEditor = new GameEditor();
+  root.append(main);
+
+  if (showControls) {
+    root.append(scoreBoard);
+  }
+
+  const gameEditor = new GameEditor(gameAppEventService);
   gameEditor.init();
 
   return () => {
