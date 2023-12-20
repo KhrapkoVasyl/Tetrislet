@@ -49,10 +49,12 @@ const mount = (root, gameAppEventService, config) => {
 
   const gameEditor = new GameEditor(gameAppEventService);
   gameEditor.init();
+  gameAppEventService.fire(gameAppEventService.GameAppEvent.MOUNT);
 
   return () => {
     gameEditor.destroy();
-    root.innerHTML = '';
+    root.replaceChildren();
+    gameAppEventService.fire(gameAppEventService.GameAppEvent.UNMOUNT);
   };
 };
 
